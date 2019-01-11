@@ -3,7 +3,10 @@ import React from 'react';
 import classes from './Cockpit.css';
 
 const Cockpit = props => {
-  let btnClass = props.showPersons ? classes.Red : '';
+  let btnClass = classes.Button;
+  if (props.showPersons) {
+    btnClass = [classes.Red, classes.Button].join(' ');
+  }
 
   const pClasses = [];
   if (props.persons.length <= 2) {
@@ -14,13 +17,13 @@ const Cockpit = props => {
   }
 
   return (
-    <div className={classes.Cockpit}>
+    <React.Fragment>
       <h1>{props.appTitle}</h1>
       <p className={pClasses.join(' ')}>This is really working!</p>
       <button className={btnClass} onClick={props.clicked}>
         Toggle Persons
       </button>
-    </div>
+    </React.Fragment>
   );
 };
 
