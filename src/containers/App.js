@@ -50,7 +50,7 @@ class App extends Component {
   togglePersonsHandler() {
     /* 
       we use function in setState to make sure the prevState
-      is not mutated by some other setState call
+      is not mutated by some other setState call, because setState is async
     */
     this.setState((prevState, props) => ({
       showPersons: !prevState.showPersons,
