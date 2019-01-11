@@ -6,34 +6,46 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.switchNameHandler = this.switchNameHandler.bind(this);
+    this.deletePersonHandler = this.deletePersonHandler.bind(this);
     this.nameChangedHandler = this.nameChangedHandler.bind(this);
+    this.togglePersonsHandler = this.togglePersonsHandler.bind(this);
   }
 
   state = {
     persons: [
-      { name: 'Max', age: 20 },
-      { name: 'George', age: 25 },
-      { name: 'Paul', age: 17 },
+      { id: 'sda', name: 'Max', age: 20 },
+      { id: 'ffe', name: 'George', age: 25 },
+      { id: 'rra', name: 'Paul', age: 17 },
     ],
+    showPersons: false,
   };
 
-  switchNameHandler() {
+  deletePersonHandler(index) {
+    const persons = [...this.state.persons];
+    persons.splice(index, 1);
+    this.setState({ persons });
+  }
+
+  nameChangedHandler(event, id) {
+    const personIndex = this.state.persons.findIndex(
+      person => person.id === id,
+    );
+    if (personIndex === -1) {
+      return;
+    }
+    const person = { ...this.state.persons[personIndex] };
+    person.name = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[personIndex] = person;
+
     this.setState({
-      persons: [
-        { name: 'Paul', age: 17 },
-        { name: 'George', age: 25 },
-        { name: 'Max', age: 20 },
-      ],
+      persons,
     });
   }
 
-  nameChangedHandler(event, index) {
-    const newPersons = [...this.state.persons];
-    newPersons[index].name = event.target.value;
-    this.setState({
-      persons: newPersons,
-    });
+  togglePersonsHandler() {
+    this.setState({ showPersons: !this.state.showPersons });
   }
 
   render() {
@@ -45,22 +57,27 @@ class App extends Component {
       cursor: 'pointer',
     };
 
+    let persons = null;
+    if (this.state.showPersons) {
+      persons = this.state.persons.map(({ name, age, id }, index) => (
+        <Person
+          key={id}
+          name={name}
+          age={age}
+          click={() => this.deletePersonHandler(index)}
+          change={event => this.nameChangedHandler(event, id)}
+        />
+      ));
+    }
+
     return (
       <div className="App">
         <h1>Hi, I'm React App</h1>
         <p>This is really working!</p>
-        <button style={style} onClick={this.switchNameHandler}>
-          Switch Name
+        <button style={style} onClick={this.togglePersonsHandler}>
+          Toggle Persons
         </button>
-        {this.state.persons.map(({ name, age }, index) => (
-          <Person
-            key={index}
-            name={name}
-            age={age}
-            click={this.switchNameHandler}
-            change={event => this.nameChangedHandler(event, index)}
-          />
-        ))}
+        {persons}
       </div>
     );
   }
