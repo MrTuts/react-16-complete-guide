@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import Person from './Person/Person';
 
 class Persons extends Component {
+  constructor(props) {
+    super(props);
+
+    this.lastPersonRef = React.createRef();
+  }
+
+  componentDidMount() {
+    this.lastPersonRef.current.focusInput();
+  }
+
   render() {
     return this.props.persons.map(({ name, age, id }, index) => (
-      //will only work in production build
       <Person
+        ref={this.lastPersonRef}
         position={index}
         name={name}
         age={age}

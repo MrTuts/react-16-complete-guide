@@ -8,13 +8,15 @@ class Person extends Component {
   constructor(props) {
     super(props);
 
-    this.inputElement = null;
+    this.inputElement = null; //old way
+    this.inputElement2 = React.createRef(); //new way
   }
 
-  componentDidMount() {
-    if (this.props.position === 0) {
-      this.inputElement.focus();
-    }
+  componentDidMount() {}
+
+  focusInput() {
+    //this.inputElement.focus(); //oldWay
+    this.inputElement2.current.focus(); //newWay
   }
 
   render() {
@@ -29,6 +31,12 @@ class Person extends Component {
           ref={inp => {
             this.inputElement = inp;
           }}
+          type="text"
+          onChange={props.change}
+          value={props.name}
+        />
+        <input
+          ref={this.inputElement2}
           type="text"
           onChange={props.change}
           value={props.name}
