@@ -12,16 +12,16 @@ class App extends Component {
     this.deletePersonHandler = this.deletePersonHandler.bind(this);
     this.nameChangedHandler = this.nameChangedHandler.bind(this);
     this.togglePersonsHandler = this.togglePersonsHandler.bind(this);
+    this.state = {
+      persons: [
+        { id: 'sda', name: 'Max', age: 20 },
+        { id: 'ffe', name: 'George', age: 25 },
+        { id: 'rra', name: 'Paul', age: 17 },
+      ],
+      showPersons: false,
+      toggleClicked: 0,
+    };
   }
-
-  state = {
-    persons: [
-      { id: 'sda', name: 'Max', age: 20 },
-      { id: 'ffe', name: 'George', age: 25 },
-      { id: 'rra', name: 'Paul', age: 17 },
-    ],
-    showPersons: false,
-  };
 
   deletePersonHandler(index) {
     const persons = [...this.state.persons];
@@ -48,7 +48,14 @@ class App extends Component {
   }
 
   togglePersonsHandler() {
-    this.setState({ showPersons: !this.state.showPersons });
+    /* 
+      we use function in setState to make sure the prevState
+      is not mutated by some other setState call
+    */
+    this.setState((prevState, props) => ({
+      showPersons: !prevState.showPersons,
+      toggleClicked: prevState.toggleClicked + 1,
+    }));
   }
 
   render() {
