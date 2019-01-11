@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   constructor(props) {
@@ -55,13 +56,15 @@ class App extends Component {
 
     if (this.state.showPersons) {
       persons = this.state.persons.map(({ name, age, id }, index) => (
-        <Person
-          key={id}
-          name={name}
-          age={age}
-          click={() => this.deletePersonHandler(index)}
-          change={event => this.nameChangedHandler(event, id)}
-        />
+        //will only work in production build
+        <ErrorBoundary key={id}>
+          <Person
+            name={name}
+            age={age}
+            click={() => this.deletePersonHandler(index)}
+            change={event => this.nameChangedHandler(event, id)}
+          />
+        </ErrorBoundary>
       ));
 
       btnClass = classes.Red;
