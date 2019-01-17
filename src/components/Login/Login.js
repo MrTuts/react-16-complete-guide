@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import { AuthContext } from '../../containers/App';
+import AuthContext from '../../containers/auth-context';
 
-const login = () => (
-  <AuthContext.Consumer>
-    {authContext => {
-      console.log(authContext);
-      return (
-        <button onClick={authContext.toggleAuth}>
-          {authContext.isAuth ? 'Logout' : 'Login'}
-        </button>
-      );
-    }}
-  </AuthContext.Consumer>
-);
+class Login extends Component {
+  static contextType = AuthContext;
 
-export default login;
+  componentDidMount() {
+    //now we have access to context in life cycle methods
+    console.log(this.context);
+  }
+
+  render() {
+    const authContext = this.context;
+    return (
+      <button onClick={authContext.toggleAuth}>
+        {authContext.isAuth ? 'Logout' : 'Login'}
+      </button>
+    );
+  }
+}
+
+export default Login;

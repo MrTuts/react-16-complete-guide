@@ -6,10 +6,7 @@ import Login from '../components/Login/Login';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 
-export const AuthContext = React.createContext({
-  isAuth: false,
-  toggleAuth: () => {},
-});
+import AuthContext from './auth-context';
 
 class App extends Component {
   constructor(props) {
