@@ -28,6 +28,27 @@ class App extends Component {
     };
   }
 
+  //update state based on new props received
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps');
+    return null;
+  }
+
+  /*
+    is called before componentDidUpdate
+    useful to e.g. save scroll position of user and scroll user to same position
+    in componentDidUpdate
+  */
+  getSnapshotBeforeUpdate(prevProps, prevState) {
+    console.log('getSnapshotBeforeUpdate', prevProps, prevState);
+    return 'oh snap!';
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    //snapshot value comes from getSnapshotBeforeUpdate
+    console.log('componentDidUpdate', snapshot);
+  }
+
   toggleAuth() {
     this.setState(prevState => ({
       authenticated: !prevState.authenticated,
