@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classes from './Person.css';
 import withClass from '../../../hoc/withClass';
+import { AuthContext } from '../../../containers/App';
 
 class Person extends Component {
   constructor(props) {
@@ -23,7 +24,10 @@ class Person extends Component {
     const props = this.props;
     return (
       <React.Fragment key={props.name}>
-        {this.props.authenticated && <p>I am authenticated</p>}
+        <AuthContext.Consumer>
+          {auth => auth && <p>I am authenticated</p>}
+        </AuthContext.Consumer>
+
         <p onClick={props.click}>
           Hola {props.name}, tú tienes {props.age} anos
         </p>

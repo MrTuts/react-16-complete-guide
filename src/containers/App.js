@@ -5,6 +5,8 @@ import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 
+export const AuthContext = React.createContext(false);
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -74,14 +76,15 @@ class App extends Component {
           clicked={this.togglePersonsHandler}
           login={this.loginHandler}
         />
-        {this.state.showPersons && (
-          <Persons
-            clicked={this.deletePersonHandler}
-            changed={this.nameChangedHandler}
-            persons={this.state.persons}
-            isAuthenticated={this.state.authenticated}
-          />
-        )}
+        <AuthContext.Provider value={this.state.authenticated}>
+          {this.state.showPersons && (
+            <Persons
+              clicked={this.deletePersonHandler}
+              changed={this.nameChangedHandler}
+              persons={this.state.persons}
+            />
+          )}
+        </AuthContext.Provider>
       </React.Fragment>
     );
   }
