@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
+import Login from '../components/Login/Login';
 import Cockpit from '../components/Cockpit/Cockpit';
 import withClass from '../hoc/withClass';
 
-export const AuthContext = React.createContext(false);
+export const AuthContext = React.createContext({
+  isAuth: false,
+  toggleAuth: () => {},
+});
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +18,7 @@ class App extends Component {
     this.deletePersonHandler = this.deletePersonHandler.bind(this);
     this.nameChangedHandler = this.nameChangedHandler.bind(this);
     this.togglePersonsHandler = this.togglePersonsHandler.bind(this);
-    this.loginHandler = this.loginHandler.bind(this);
+    this.toggleAuth = this.toggleAuth.bind(this);
     this.state = {
       persons: [
         { id: 'sda', name: 'Max', age: 20 },
@@ -27,8 +31,10 @@ class App extends Component {
     };
   }
 
-  loginHandler() {
-    this.setState({ authenticated: true });
+  toggleAuth() {
+    this.setState(prevState => ({
+      authenticated: !prevState.authenticated,
+    }));
   }
 
   deletePersonHandler(index) {
@@ -74,9 +80,14 @@ class App extends Component {
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           clicked={this.togglePersonsHandler}
-          login={this.loginHandler}
         />
-        <AuthContext.Provider value={this.state.authenticated}>
+        <AuthContext.Provider
+          value={{
+            isAuth: this.state.authenticated,
+            toggleAuth: this.toggleAuth,
+          }}
+        >
+          <Login />
           {this.state.showPersons && (
             <Persons
               clicked={this.deletePersonHandler}

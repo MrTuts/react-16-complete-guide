@@ -15,6 +15,7 @@ class Persons extends Component {
   render() {
     return this.props.persons.map(({ name, age, id }, index) => (
       <Person
+        key={name}
         ref={this.lastPersonRef}
         position={index}
         name={name}

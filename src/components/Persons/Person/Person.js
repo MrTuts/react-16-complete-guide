@@ -25,7 +25,7 @@ class Person extends Component {
     return (
       <React.Fragment key={props.name}>
         <AuthContext.Consumer>
-          {auth => auth && <p>I am authenticated</p>}
+          {authContext => authContext.isAuth && <p>I am authenticated</p>}
         </AuthContext.Consumer>
 
         <p onClick={props.click}>
@@ -51,7 +51,7 @@ class Person extends Component {
   }
 }
 
-Person.PropTypes = {
+Person.propTypes = {
   click: PropTypes.func,
   change: PropTypes.func,
   name: PropTypes.string,
