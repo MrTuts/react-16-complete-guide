@@ -27,4 +27,5 @@ const Cockpit = props => {
   );
 };
 
-export default Cockpit;
+// similar to PureComponent, shallow checks props for changes
+export default React.memo(Cockpit);
