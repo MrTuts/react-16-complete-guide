@@ -12,6 +12,7 @@ class App extends Component {
     this.deletePersonHandler = this.deletePersonHandler.bind(this);
     this.nameChangedHandler = this.nameChangedHandler.bind(this);
     this.togglePersonsHandler = this.togglePersonsHandler.bind(this);
+    this.loginHandler = this.loginHandler.bind(this);
     this.state = {
       persons: [
         { id: 'sda', name: 'Max', age: 20 },
@@ -20,7 +21,12 @@ class App extends Component {
       ],
       showPersons: false,
       toggleClicked: 0,
+      authenticated: false,
     };
+  }
+
+  loginHandler() {
+    this.setState({ authenticated: true });
   }
 
   deletePersonHandler(index) {
@@ -66,12 +72,14 @@ class App extends Component {
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           clicked={this.togglePersonsHandler}
+          login={this.loginHandler}
         />
         {this.state.showPersons && (
           <Persons
             clicked={this.deletePersonHandler}
             changed={this.nameChangedHandler}
             persons={this.state.persons}
+            isAuthenticated={this.state.authenticated}
           />
         )}
       </React.Fragment>

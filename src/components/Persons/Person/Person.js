@@ -23,6 +23,7 @@ class Person extends Component {
     const props = this.props;
     return (
       <React.Fragment key={props.name}>
+        {this.props.authenticated && <p>I am authenticated</p>}
         <p onClick={props.click}>
           Hola {props.name}, tú tienes {props.age} anos
         </p>
